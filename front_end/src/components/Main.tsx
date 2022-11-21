@@ -4,16 +4,6 @@ import { useCall, useContractFunction } from "@usedapp/core"
 import { Contract, utils } from "ethers"
 import VotingSystem from "../chain-info/deployments/5/0xc6AA48837F8DAA270f5EE9CAE26e60023d6f30C8.json"
 
-const useStyles = makeStyles((theme) => ({
-    textField: {
-        required: true,
-        label: 'Required',
-        variant: 'filled'
-    }
-
-
-}))
-
 export const Main = () => {
 
     const votingSystemAdress = '0xc6AA48837F8DAA270f5EE9CAE26e60023d6f30C8'
@@ -21,28 +11,28 @@ export const Main = () => {
 
     const { state, send } = useContractFunction(contract, 'vote', { transactionName: 'vote', gasLimitBufferPercentage: 10, })
 
-    const addVote = () => {
-        send("Halina", "Nowak", "90022074332", "Kandydat 2")
+    const addVote = (name: string, surname: string, PESEL: string, candidate: string) => {
+        send(name, surname, PESEL, candidate)
     }
     /**const chief = String(contract.electionChief()) */
 
     /**const { value } = useCall({ contract: contract, method: 'electionChief', args: [] }) */
 
-    const [name, setName] = useState<number | string | Array<number | string>>()
+    const [name, setName] = useState<string>()
     const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newNameValue = event.target.value === "" ? "" : String(event.target.value)
         setName(newNameValue)
         console.log(newNameValue)
     }
 
-    const [surname, setSurname] = useState<number | string | Array<number | string>>()
+    const [surname, setSurname] = useState<string>()
     const handleSurnameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newSurnameValue = event.target.value === "" ? "" : String(event.target.value)
         setSurname(newSurnameValue)
         console.log("surname: " + newSurnameValue)
     }
 
-    const [pesel, setPesel] = useState<number | string | Array<number | string>>()
+    const [pesel, setPesel] = useState<string>()
     const handlePeselInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newPeselValue = event.target.value === "" ? "" : String(event.target.value)
         setPesel(newPeselValue)
@@ -58,23 +48,15 @@ export const Main = () => {
     const handleSubmitFrom = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setShow(true);
+        addVote(name ?? '', surname ?? '', pesel ?? '', selectedCandidate ?? '');
     }
-
-    const classes = useStyles()
 
     const [show, setShow] = useState<boolean>(false);
     return (
-        <Box>
-            <Box>
-                <div>
-                    <Button color="primary"
-                        variant="contained"
-                        onClick={() => addVote()}>VOTE!</Button>
-                </div>
-            </Box>
-            <Box>
+        <div>
+            <Box sx={{ p: 5, border: '3px black' }}>
                 <form onSubmit={handleSubmitFrom}>
-                    <TextField className={classes.textField}
+                    <TextField
                         required
                         label='Imie'
                         variant='filled'
@@ -82,7 +64,7 @@ export const Main = () => {
                         value={name}
                         onChange={handleNameInputChange}></TextField><br />
                     <p>Oto: {name}</p>
-                    <TextField className={classes.textField}
+                    <TextField
                         required
                         label='Nazwisko'
                         variant='filled'
@@ -90,7 +72,7 @@ export const Main = () => {
                         value={surname}
                         onChange={handleSurnameInputChange}></TextField><br />
                     <p>Oto: {surname}</p>
-                    <TextField className={classes.textField}
+                    <TextField
                         required
                         type="number"
                         label='PESEL'
@@ -105,8 +87,8 @@ export const Main = () => {
                         <FormControlLabel value="Kandydat 2" control={<Radio />} label="Kandydat 2" />
                         <FormControlLabel value="Kandydat 3" control={<Radio />} label="Kandydat 3" />
                     </RadioGroup>
-                    <Button type="submit" variant="outlined">
-                        Submit
+                    <Button type="submit" color="primary" variant="contained">
+                        GŁOSUJ!
                     </Button>
                 </form>
             </Box>
@@ -121,6 +103,6 @@ export const Main = () => {
                     <p>Kandydat: {selectedCandidate}</p>
                 </Box>
             ) : (<></>)}
-        </Box>
+        </div>
     )
 }
