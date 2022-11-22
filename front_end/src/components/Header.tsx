@@ -8,7 +8,7 @@ export const Header = () => {
 
     const isConnected = account !== undefined
     return (
-        <div >
+        <div className="Header">
             {isConnected ? (
                 <Button variant="contained" onClick={deactivate}>
                     Disconnect

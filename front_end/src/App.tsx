@@ -23,7 +23,7 @@ const config_1 = {
 function App() {
   return (
     <DAppProvider config={config_1}>
-      <Container maxWidth="md">
+      <Container maxWidth="xs" className='Container-test'>
         <Header />
 
         <Main />
