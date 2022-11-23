@@ -1,27 +1,29 @@
 import React, { useState } from "react"
 import { Box, Button, Input, makeStyles, TextField, RadioGroup, Radio, FormControlLabel, CircularProgress } from "@material-ui/core"
 import { borders } from '@mui/system';
-import { useCall, useContractFunction } from "@usedapp/core"
+import { useCall, useContractFunction, useEthers } from "@usedapp/core"
 import { Contract, utils } from "ethers"
 import './cmoponents.css'
 import VotingSystem from "../chain-info/deployments/5/0xc6AA48837F8DAA270f5EE9CAE26e60023d6f30C8.json"
 
 export const Main = () => {
 
+    /** CONNECT CONTRACT */
+    const { account } = useEthers()
     const votingSystemAdress = '0xc6AA48837F8DAA270f5EE9CAE26e60023d6f30C8'
     const contract = new Contract(votingSystemAdress, new utils.Interface(VotingSystem.abi)) as any
 
+    /** GET FUNCTIONS AND VALUES FROM CONTRACT */
     const { send: sendVote, state: stateVote } = useContractFunction(contract, 'vote', { transactionName: 'vote', gasLimitBufferPercentage: 10, })
 
     const addVote = (name: string, surname: string, PESEL: string, candidate: string) => {
         sendVote(name, surname, PESEL, candidate)
     }
-
     const isMining = stateVote.status === 'Mining'
-    /**const chief = String(contract.electionChief()) */
 
-    /**const { value } = useCall({ contract: contract, method: 'electionChief', args: [] }) */
+    const { value: electionChief, error } = useCall({ contract: contract, method: 'electionChief', args: [] }) ?? {}
 
+    /** FORM DATA */
     const [name, setName] = useState<string>()
     const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newNameValue = event.target.value === "" ? "" : String(event.target.value)
@@ -97,7 +99,8 @@ export const Main = () => {
                 </form>
             </Box>
             <Box>
-
+                <p>Chief: {electionChief}</p>
+                <p>Current Account: {account}</p>
             </Box>
             {show ? (
                 <Box>
@@ -107,6 +110,10 @@ export const Main = () => {
                     <p>Kandydat: {selectedCandidate}</p>
                 </Box>
             ) : (<></>)}
+            {String(account) === String(electionChief) ? (
+                <Box>
+                    <p>Panel widoczny dla organizatora</p>
+                </Box>) : (<></>)}
         </div>
     )
 }
