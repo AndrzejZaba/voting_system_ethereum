@@ -1,8 +1,9 @@
 import React, { useState } from "react"
-import { Box, Button, Input, makeStyles, TextField, RadioGroup, Radio, FormControlLabel, CircularProgress } from "@material-ui/core"
-import { borders } from '@mui/system';
+import { Box, Grid, Button, Input, makeStyles, TextField, RadioGroup, Radio, FormControlLabel, CircularProgress } from "@material-ui/core"
 import { useCall, useContractFunction, useEthers } from "@usedapp/core"
 import { Contract, utils } from "ethers"
+
+import { Ballot } from "./Ballot/Ballot"
 import './cmoponents.css'
 import VotingSystem from "../chain-info/deployments/5/0xc6AA48837F8DAA270f5EE9CAE26e60023d6f30C8.json"
 
@@ -60,60 +61,34 @@ export const Main = () => {
     const [show, setShow] = useState<boolean>(false);
     return (
         <div>
-            <Box sx={{ border: 1, borderColor: 'primary.main' }}>
-                <form onSubmit={handleSubmitFrom} className="Form-test">
-                    <div className="Form-contols"><TextField
-                        required
-                        fullWidth={true}
-                        label='Imie'
-                        variant='filled'
-                        id="name-TextField"
-                        value={name}
-                        onChange={handleNameInputChange}></TextField></div><br />
-                    <div className="Form-contols"><TextField
-                        required
-                        fullWidth={true}
-                        label='Nazwisko'
-                        variant='filled'
-                        id="surname-TextField"
-                        value={surname}
-                        onChange={handleSurnameInputChange}></TextField></div><br />
-                    <div className="Form-contols"><TextField
-                        required
-                        fullWidth={true}
-                        type="number"
-                        label='PESEL'
-                        variant='filled'
-                        id="pesel-TextField"
-                        value={pesel}
-                        onChange={handlePeselInputChange}></TextField></div><br />
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+            >
 
-                    <RadioGroup name="candidates" value={selectedCandidate} onChange={handleRadioChange}>
-                        <FormControlLabel value="Kandydat 1" control={<Radio />} label="Kandydat 1" />
-                        <FormControlLabel value="Kandydat 2" control={<Radio />} label="Kandydat 2" />
-                        <FormControlLabel value="Kandydat 3" control={<Radio />} label="Kandydat 3" />
-                    </RadioGroup>
-                    <Button type="submit" color="primary" variant="contained" disabled={isMining}>
-                        {isMining ? <CircularProgress size={26} /> : "GŁOSUJ"}
-                    </Button>
-                </form>
-            </Box>
-            <Box>
-                <p>Chief: {electionChief}</p>
-                <p>Current Account: {account}</p>
-            </Box>
-            {show ? (
-                <Box>
-                    <p>imie: {name}</p>
-                    <p>Nazwisko: {surname}</p>
-                    <p>PESEL: {pesel}</p>
-                    <p>Kandydat: {selectedCandidate}</p>
-                </Box>
-            ) : (<></>)}
-            {String(account) === String(electionChief) ? (
-                <Box>
-                    <p>Panel widoczny dla organizatora</p>
-                </Box>) : (<></>)}
+                <Grid item xs={3}>
+                    <Ballot contract={contract} />
+                    <Box>
+                        <p>Chief: {electionChief}</p>
+                        <p>Current Account: {account}</p>
+                    </Box>
+                    {show ? (
+                        <Box>
+                            <p>imie: {name}</p>
+                            <p>Nazwisko: {surname}</p>
+                            <p>PESEL: {pesel}</p>
+                            <p>Kandydat: {selectedCandidate}</p>
+                        </Box>
+                    ) : (<></>)}
+                    {String(account) === String(electionChief) ? (
+                        <Box>
+                            <p>Panel widoczny dla organizatora</p>
+                        </Box>) : (<></>)}
+                </Grid>
+            </Grid>
         </div>
     )
 }
