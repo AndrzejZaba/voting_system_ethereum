@@ -1,12 +1,21 @@
 import React, { useState } from "react"
-import { useCall, useContractFunction, useEthers } from "@usedapp/core"
+import { useContractFunction } from "@usedapp/core"
 import { Box, Button, TextField, RadioGroup, Radio, FormControlLabel, CircularProgress } from "@material-ui/core"
 
-import VotingSystem from "../../chain-info/deployments/5/0xc6AA48837F8DAA270f5EE9CAE26e60023d6f30C8.json"
 import './../cmoponents.css'
-import { Contract } from "ethers"
 
-export const Ballot = (contract: any) => {
+interface IFormData {
+    name: string
+    surname: string
+    pesel: string
+    selectedCandidate: string
+    updateName: (value: string) => void
+    updateSurname: (value: string) => void
+    updatePesel: (value: string) => void
+    updateSelectedCandidate: (value: string) => void
+}
+
+export const Ballot = (contract: any, { name, surname, pesel, selectedCandidate, updateName, updateSurname, updatePesel, updateSelectedCandidate }: IFormData) => {
 
 
     /** GET FUNCTIONS AND VALUES FROM CONTRACT */
@@ -18,31 +27,26 @@ export const Ballot = (contract: any) => {
     const isMining = stateVote.status === 'Mining'
 
     /** FORM DATA */
-    const [name, setName] = useState<string>()
     const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newNameValue = event.target.value === "" ? "" : String(event.target.value)
-        setName(newNameValue)
+        updateName(newNameValue)
         console.log(newNameValue)
     }
 
-    const [surname, setSurname] = useState<string>()
     const handleSurnameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newSurnameValue = event.target.value === "" ? "" : String(event.target.value)
-        setSurname(newSurnameValue)
+        updateSurname(newSurnameValue)
         console.log("surname: " + newSurnameValue)
     }
 
-    const [pesel, setPesel] = useState<string>()
     const handlePeselInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newPeselValue = event.target.value === "" ? "" : String(event.target.value)
-        setPesel(newPeselValue)
+        updatePesel(newPeselValue)
         console.log(newPeselValue)
     }
 
-    const [selectedCandidate, setSelectedCandidate] = useState('');
-
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedCandidate((event.target as HTMLInputElement).value);
+        updateSelectedCandidate((event.target as HTMLInputElement).value);
     }
 
     const handleSubmitFrom = (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,7 +54,6 @@ export const Ballot = (contract: any) => {
         setShow(true);
         addVote(name ?? '', surname ?? '', pesel ?? '', selectedCandidate ?? '');
     }
-
     const [show, setShow] = useState<boolean>(false);
     return (
         <div>
@@ -63,7 +66,7 @@ export const Ballot = (contract: any) => {
                         variant='filled'
                         id="name-TextField"
                         value={name}
-                        onChange={handleNameInputChange}></TextField></div><br />
+                        onChange={() => handleNameInputChange}></TextField></div><br />
                     <div className="Form-contols"><TextField
                         required
                         fullWidth={true}
@@ -71,7 +74,7 @@ export const Ballot = (contract: any) => {
                         variant='filled'
                         id="surname-TextField"
                         value={surname}
-                        onChange={handleSurnameInputChange}></TextField></div><br />
+                        onChange={() => handleSurnameInputChange}></TextField></div><br />
                     <div className="Form-contols"><TextField
                         required
                         fullWidth={true}
@@ -80,9 +83,9 @@ export const Ballot = (contract: any) => {
                         variant='filled'
                         id="pesel-TextField"
                         value={pesel}
-                        onChange={handlePeselInputChange}></TextField></div><br />
+                        onChange={() => handlePeselInputChange}></TextField></div><br />
 
-                    <RadioGroup name="candidates" value={selectedCandidate} onChange={handleRadioChange}>
+                    <RadioGroup name="candidates" value={selectedCandidate} onChange={() => handleRadioChange}>
                         <FormControlLabel value="Kandydat 1" control={<Radio />} label="Kandydat 1" />
                         <FormControlLabel value="Kandydat 2" control={<Radio />} label="Kandydat 2" />
                         <FormControlLabel value="Kandydat 3" control={<Radio />} label="Kandydat 3" />

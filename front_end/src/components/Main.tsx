@@ -6,6 +6,7 @@ import { Contract, utils } from "ethers"
 import { Ballot } from "./Ballot/Ballot"
 import './cmoponents.css'
 import VotingSystem from "../chain-info/deployments/5/0xc6AA48837F8DAA270f5EE9CAE26e60023d6f30C8.json"
+import { AdminPanel } from "./Ballot/AdminPanel"
 
 export const Main = () => {
 
@@ -26,39 +27,26 @@ export const Main = () => {
 
     /** FORM DATA */
     const [name, setName] = useState<string>()
-    const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newNameValue = event.target.value === "" ? "" : String(event.target.value)
-        setName(newNameValue)
-        console.log(newNameValue)
+    const updateName = (_name: string): void => {
+        setName(_name)
     }
 
     const [surname, setSurname] = useState<string>()
-    const handleSurnameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newSurnameValue = event.target.value === "" ? "" : String(event.target.value)
-        setSurname(newSurnameValue)
-        console.log("surname: " + newSurnameValue)
+    const updateSurname = (_surname: string): void => {
+        setSurname(_surname)
     }
 
     const [pesel, setPesel] = useState<string>()
-    const handlePeselInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newPeselValue = event.target.value === "" ? "" : String(event.target.value)
-        setPesel(newPeselValue)
-        console.log(newPeselValue)
+    const updatePesel = (_pesel: string): void => {
+        setPesel(_pesel)
     }
 
     const [selectedCandidate, setSelectedCandidate] = useState('');
 
-    const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedCandidate((event.target as HTMLInputElement).value);
+    const updateSelectedCandidate = (_selectedCandidate: string): void => {
+        setSelectedCandidate(_selectedCandidate)
     }
-
-    const handleSubmitFrom = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setShow(true);
-        addVote(name ?? '', surname ?? '', pesel ?? '', selectedCandidate ?? '');
-    }
-
-    const [show, setShow] = useState<boolean>(false);
+    const [showAdminPanel, setShow] = useState<boolean>(true);
     return (
         <div>
             <Grid
@@ -68,25 +56,55 @@ export const Main = () => {
                 alignItems="center"
                 justifyContent="center"
             >
-
                 <Grid item xs={3}>
-                    <Ballot contract={contract} />
+                    <Ballot
+                        contract={contract}
+                        name={name}
+                        surname={surname}
+                        pesel={pesel}
+                        selectedCandidate={selectedCandidate}
+                        updateName={updateName}
+                        updateSurname={updateSurname}
+                        updatePesel={updatePesel}
+                        updateSelectedCandidate={updateSelectedCandidate} />
                     <Box>
                         <p>Chief: {electionChief}</p>
                         <p>Current Account: {account}</p>
                     </Box>
-                    {show ? (
-                        <Box>
-                            <p>imie: {name}</p>
-                            <p>Nazwisko: {surname}</p>
-                            <p>PESEL: {pesel}</p>
-                            <p>Kandydat: {selectedCandidate}</p>
-                        </Box>
+                    {showAdminPanel && String(account) === String(electionChief) ? (
+
+                        <div>
+
+                            <Box>
+                                <p>Chief: {electionChief}</p>
+                                <p>Current Account: {account}</p>
+                            </Box>
+                            <Box>
+                                <p>imie: {name}</p>
+                                <p>Nazwisko: {surname}</p>
+                                <p>PESEL: {pesel}</p>
+                                <p>Kandydat: {selectedCandidate}</p>
+
+                            </Box>
+                            <Box>
+                                <p>Panel widoczny dla organizatora</p>
+                            </Box>
+
+
+
+                            <AdminPanel
+                                contract={contract}
+                                account={account}
+                                chief={electionChief}
+                                name={name}
+                                surname={surname}
+                                pesel={pesel}
+                                selectedCandidate={selectedCandidate}
+                            />
+                        </div>
                     ) : (<></>)}
-                    {String(account) === String(electionChief) ? (
-                        <Box>
-                            <p>Panel widoczny dla organizatora</p>
-                        </Box>) : (<></>)}
+
+
                 </Grid>
             </Grid>
         </div>
