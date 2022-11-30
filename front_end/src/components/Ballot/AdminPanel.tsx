@@ -10,32 +10,27 @@ interface IAdminPanel {
     contract: Contract
     account: string | undefined
     chief: string
-    name: string | undefined
-    surname: string | undefined
-    pesel: string | undefined
+    name: string
+    surname: string
+    pesel: string
     selectedCandidate: string
 }
 
 export const AdminPanel = ({ contract, account, chief, name, surname, pesel, selectedCandidate }: IAdminPanel) => {
     const { value: electionChief, error } = useCall({ contract: contract, method: 'electionChief', args: [] }) ?? {}
+
+    const { send: finishElection, state: stateFinishElection } = useContractFunction(contract, 'finishElection', { transactionName: 'finishElection', gasLimitBufferPercentage: 10, })
+    const isFinishElectionMining = stateFinishElection.status === 'Mining'
+
+    const finishElectionF = () => {
+        finishElection();
+    }
+
     return (
         <div>
-
-            <Box>
-                <p>Chief: {chief}</p>
-                <p>Current Account: {account}</p>
-            </Box>
-            <Box>
-                <p>imie: {name}</p>
-                <p>Nazwisko: {surname}</p>
-                <p>PESEL: {pesel}</p>
-                <p>Kandydat: {selectedCandidate}</p>
-
-            </Box>
-            <Box>
-                <p>Panel widoczny dla organizatora</p>
-            </Box>
-
+            <Button type="submit" color="secondary" variant="contained" disabled={isFinishElectionMining} onClick={() => finishElectionF()}>
+                {isFinishElectionMining ? <CircularProgress size={26} /> : "ZAKOŃCZ WYBORY"}
+            </Button>
         </div>
     )
 }
