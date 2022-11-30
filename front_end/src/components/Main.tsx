@@ -7,6 +7,7 @@ import { Ballot } from "./Ballot/Ballot"
 import './cmoponents.css'
 import VotingSystem from "../chain-info/deployments/5/0x4794CBb3A1BAedeFB453C4d2042B711bC7eeca89.json"
 import { AdminPanel } from "./Ballot/AdminPanel"
+import { color, textAlign } from "@mui/system"
 
 export const Main = () => {
 
@@ -55,83 +56,82 @@ export const Main = () => {
         addVote(name ?? '', surname ?? '', pesel ?? '', selectedCandidate ?? '');
     }
     const [showAdminPanel, setShow] = useState<boolean>(true);
+
+
     return (
 
-        <div>
-            <Box sx={{
-                marginTop: 80,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}>
-                {isElectionOpen ? <h2>Election Open: {String(isElectionOpen)}</h2> : <h2></h2>}
 
-                <Box component="form" onSubmit={handleSubmitFrom} sx={{ border: 1, borderColor: 'primary.main' }}>
+        <Box >
+            {isElectionOpen ?
+                <div><h2>Głosowanie otwarte!</h2>
+                    <p>Podaj swoje dane a następnie wybierz swojego kandydata</p></div> : <h2>Głosowanie Zamknięte!</h2>}
 
-                    <div className="Form-contols"><TextField
-                        required
-                        disabled={!isElectionOpen}
-                        fullWidth={true}
-                        label='Imie'
-                        variant='outlined'
-                        id="name-TextField"
-                        value={name}
-                        onChange={handleNameInputChange}></TextField></div><br />
-                    <div className="Form-contols"><TextField
-                        required
-                        disabled={!isElectionOpen}
-                        fullWidth={true}
-                        label='Nazwisko'
-                        variant='outlined'
-                        id="surname-TextField"
-                        value={surname}
-                        onChange={handleSurnameInputChange}></TextField></div><br />
-                    <div className="Form-contols"><TextField
-                        required
-                        disabled={!isElectionOpen}
-                        fullWidth={true}
-                        type="number"
-                        label='PESEL'
-                        variant='outlined'
-                        id="pesel-TextField"
-                        value={pesel}
-                        onChange={handlePeselInputChange}></TextField></div><br />
-                    <RadioGroup name="candidates" value={selectedCandidate} onChange={handleRadioChange}>
-                        <FormControlLabel value="Kandydat 1" control={<Radio />} label="Kandydat 1" disabled={!isElectionOpen} />
-                        <FormControlLabel value="Kandydat 2" control={<Radio />} label="Kandydat 2" disabled={!isElectionOpen} />
-                        <FormControlLabel value="Kandydat 3" control={<Radio />} label="Kandydat 3" disabled={!isElectionOpen} />
-                    </RadioGroup>
-                    <Button type="submit" color="primary" variant="contained" disabled={!isElectionOpen || isMining}>
-                        {isMining ? <CircularProgress size={26} /> : "GŁOSUJ"}
-                    </Button>
+            <Box component="form" onSubmit={handleSubmitFrom} sx={{ border: 1, borderColor: 'primary.main' }}>
 
-                </Box>
-
-                <Box>
-                    <p><b>INFO:</b></p>
-                    <p><b>Adres kontraktu:</b> {String(contract.address)}</p>
-                    <p><b>Właściciel kontraktu:</b> {electionChief}</p>
-                    <p><b>Twoje konto:</b> {account}</p>
-                </Box>
-
-
-                {showAdminPanel && String(account) === String(electionChief) ? (
-
-                    <div>
-                        <h2>ADMIN PANEL</h2>
-                        <AdminPanel
-                            contract={contract}
-                            account={account}
-                            chief={electionChief}
-                            name={name}
-                            surname={surname}
-                            pesel={pesel}
-                            selectedCandidate={selectedCandidate}
-                        />
-                    </div>
-                ) : (<></>)}
+                <div className="Form-contols"><TextField
+                    required
+                    disabled={!isElectionOpen}
+                    fullWidth={true}
+                    label='Imie'
+                    variant='outlined'
+                    id="name-TextField"
+                    value={name}
+                    onChange={handleNameInputChange}></TextField></div><br />
+                <div className="Form-contols"><TextField
+                    required
+                    disabled={!isElectionOpen}
+                    fullWidth={true}
+                    label='Nazwisko'
+                    variant='outlined'
+                    id="surname-TextField"
+                    value={surname}
+                    onChange={handleSurnameInputChange}></TextField></div><br />
+                <div className="Form-contols"><TextField
+                    required
+                    disabled={!isElectionOpen}
+                    fullWidth={true}
+                    type="number"
+                    label='PESEL'
+                    variant='outlined'
+                    id="pesel-TextField"
+                    value={pesel}
+                    onChange={handlePeselInputChange}></TextField></div><br />
+                <RadioGroup name="candidates" value={selectedCandidate} onChange={handleRadioChange}>
+                    <FormControlLabel value="Kandydat 1" control={<Radio />} label="Kandydat 1" disabled={!isElectionOpen} />
+                    <FormControlLabel value="Kandydat 2" control={<Radio />} label="Kandydat 2" disabled={!isElectionOpen} />
+                    <FormControlLabel value="Kandydat 3" control={<Radio />} label="Kandydat 3" disabled={!isElectionOpen} />
+                </RadioGroup>
+                <Button type="submit" color="primary" variant="contained" disabled={!isElectionOpen || isMining}>
+                    {isMining ? <CircularProgress size={26} /> : "GŁOSUJ"}
+                </Button>
 
             </Box>
-        </div>
+
+            <Box>
+                <p><b>INFO:</b></p>
+                <p><b>Adres kontraktu:</b> {String(contract.address)}</p>
+                <p><b>Właściciel kontraktu:</b> {electionChief}</p>
+                <p><b>Twoje konto:</b> {account}</p>
+            </Box>
+
+
+            {showAdminPanel && String(account) === String(electionChief) ? (
+
+                <div>
+                    <h2 >ADMIN PANEL</h2>
+                    <AdminPanel
+                        contract={contract}
+                        account={account}
+                        chief={electionChief}
+                        name={name}
+                        surname={surname}
+                        pesel={pesel}
+                        selectedCandidate={selectedCandidate}
+                    />
+                </div>
+            ) : (<></>)}
+
+        </Box>
+
     )
 }

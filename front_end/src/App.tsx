@@ -6,9 +6,10 @@ import { DAppProvider, Goerli, Mainnet, useEthers, useEtherBalance, Config } fro
 import { getDefaultProvider } from 'ethers'
 import { formatEther } from '@ethersproject/units'
 
-import { Container } from "@material-ui/core"
+import { Container, Box } from "@material-ui/core"
 import { Header } from './components/Header';
 import { Main } from './components/Main';
+import { BarChart } from './components/BarChart';
 
 
 const config_1 = {
@@ -23,12 +24,14 @@ const config_1 = {
 function App() {
   return (
     <DAppProvider config={config_1}>
+
+
       <Container maxWidth="xs" className='Container-test'>
-        <Header />
-
-        <Main />
+        <Box className='Box-test'>
+          <Header />
+          <Main />
+        </Box>
       </Container>
-
     </DAppProvider>
   );
 }

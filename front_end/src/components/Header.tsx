@@ -1,4 +1,4 @@
-import { Button, makeStyles } from "@material-ui/core"
+import { Button } from "@material-ui/core"
 import { useEthers, useEtherBalance } from "@usedapp/core"
 
 export const Header = () => {
