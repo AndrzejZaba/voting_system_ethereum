@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.16;
 
 contract VotingSystem {
     struct Voter {
         string name;
         string surname;
         string PESEL; // Identity number
-        int256 age; // to check if in proper age to vote
+        int16 age; // to check if in proper age to vote
         bool allowedToVote; // voted or not ? Or does his rights to vote exist?
     }
 
