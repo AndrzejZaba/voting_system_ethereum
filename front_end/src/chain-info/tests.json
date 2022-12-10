@@ -6,17 +6,30 @@
     "tests/test_voting_system.py": {
       "coverage": false,
       "isolated": false,
-      "results": ".....",
-      "sha1": "8ef5a6d5edbab02aeb917d38ec2eac78e86caaee",
+      "results": "...F.",
+      "sha1": "99f1b6f09dc8a56d193ae731fdc5c36ea74a75a0",
       "txhash": [
-        "13a9ae6036b5b60d56823130980d971766087424",
-        "5f42456ed0d9a080fc64eefed852137a5925327f",
-        "d71bb6ea2f4da92b10a66a111b795870111ea60e"
+        "34ce5f7f7b7b874fa13b142e08c8ad41da6c90c6",
+        "36afab30630ef2579ed0bd6e2c96546858602848",
+        "d1cf368d2af32c48a516235d7c1f33231e8d9d3e"
       ]
     }
   },
   "tx": {
-    "13a9ae6036b5b60d56823130980d971766087424": {
+    "34ce5f7f7b7b874fa13b142e08c8ad41da6c90c6": {
+      "VotingSystem": {
+        "0": [
+          [
+            10
+          ],
+          [
+            21
+          ],
+          []
+        ]
+      }
+    },
+    "36afab30630ef2579ed0bd6e2c96546858602848": {
       "VotingSystem": {
         "0": [
           [
@@ -43,20 +56,7 @@
         ]
       }
     },
-    "5f42456ed0d9a080fc64eefed852137a5925327f": {
-      "VotingSystem": {
-        "0": [
-          [
-            10
-          ],
-          [
-            21
-          ],
-          []
-        ]
-      }
-    },
-    "d71bb6ea2f4da92b10a66a111b795870111ea60e": {
+    "d1cf368d2af32c48a516235d7c1f33231e8d9d3e": {
       "VotingSystem": {
         "0": [
           [],

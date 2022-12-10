@@ -118,7 +118,7 @@ export const Main = () => {
             {showAdminPanel && String(account) === String(electionChief) ? (
 
                 <div>
-                    <h2 >ADMIN PANEL</h2>
+                    <h2>PANEL ADMINISTRATORA</h2>
                     <AdminPanel
                         contract={contract}
                         account={account}

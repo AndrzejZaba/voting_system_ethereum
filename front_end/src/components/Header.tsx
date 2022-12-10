@@ -11,14 +11,14 @@ export const Header = () => {
         <div className="Header">
             {isConnected ? (
                 <Button variant="contained" onClick={deactivate}>
-                    Disconnect
+                    Rozłacz
                 </Button>
             ) : (
                 <Button
                     color="primary"
                     variant="contained"
                     onClick={() => activateBrowserWallet()}>
-                    Connect
+                    Połącz
                 </Button>
             )}
         </div>
