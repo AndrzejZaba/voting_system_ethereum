@@ -64,3 +64,19 @@ def test_determine_winner():
     assert voting_system.listOfCandidates(0)[1] == 2
     assert voting_system.listOfCandidates(1)[1] == 1
     assert voting_system.listOfCandidates(2)[1] == 0
+
+def test_return_votes_value():
+    # Arrange
+    account = get_account()
+    voting_system = deploy_voting_system()
+    # Act
+    tx1 = voting_system.vote("Jan", "Kowalski", "00223390432", "Kandydat 1", {"from": account, "gas_price": GAS_PRICE})
+    tx1.wait(1)
+    tx2 = voting_system.vote("Ludwik", "Montgommery", "93031065465", "Kandydat 2", {"from": account, "gas_price": GAS_PRICE})
+    tx2.wait(1)
+    tx3 = voting_system.vote("Halina", "Nowak", "90022074332", "Kandydat 1", {"from": account, "gas_price": GAS_PRICE})
+    tx3.wait(1)
+    # Assert 
+    assert voting_system.votesValue("Kandydat 1") == 2
+    assert voting_system.votesValue("Kandydat 2") == 1
+    assert voting_system.votesValue("Kandydat 3") == 0

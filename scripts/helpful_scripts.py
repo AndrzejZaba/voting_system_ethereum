@@ -3,7 +3,7 @@ from brownie import (network, accounts, config)
 NON_FORKED_LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["hardhat", "development", "ganache"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = NON_FORKED_LOCAL_BLOCKCHAIN_ENVIRONMENTS
 
-GAS_PRICE = 2100000000 
+GAS_PRICE = 5000000000 
 #GAS_PRICE = 500000000  
 
 def get_account(index=None):

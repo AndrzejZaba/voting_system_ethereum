@@ -88,6 +88,14 @@ contract VotingSystem {
             .receivedVotes;
     }
 
+    function votesValue(string memory candidateName)
+        public
+        view
+        returns (uint256)
+    {
+        return candidates[candidateName].receivedVotes;
+    }
+
     function initializeCandidates() internal {
         listOfCandidates.push(
             Candidate({name: "Kandydat 1", receivedVotes: 0})

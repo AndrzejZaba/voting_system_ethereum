@@ -6,64 +6,10 @@
     "tests/test_voting_system.py": {
       "coverage": false,
       "isolated": false,
-      "results": "...F.",
-      "sha1": "99f1b6f09dc8a56d193ae731fdc5c36ea74a75a0",
-      "txhash": [
-        "34ce5f7f7b7b874fa13b142e08c8ad41da6c90c6",
-        "36afab30630ef2579ed0bd6e2c96546858602848",
-        "d1cf368d2af32c48a516235d7c1f33231e8d9d3e"
-      ]
+      "results": "sssss.",
+      "sha1": "f9c6fd02c86f54302624004e2b3e4e6ac145ab07",
+      "txhash": []
     }
   },
-  "tx": {
-    "34ce5f7f7b7b874fa13b142e08c8ad41da6c90c6": {
-      "VotingSystem": {
-        "0": [
-          [
-            10
-          ],
-          [
-            21
-          ],
-          []
-        ]
-      }
-    },
-    "36afab30630ef2579ed0bd6e2c96546858602848": {
-      "VotingSystem": {
-        "0": [
-          [
-            0,
-            1,
-            2,
-            3,
-            4,
-            10,
-            11,
-            14
-          ],
-          [
-            20,
-            23
-          ],
-          [
-            16,
-            17,
-            18,
-            19,
-            21
-          ]
-        ]
-      }
-    },
-    "d1cf368d2af32c48a516235d7c1f33231e8d9d3e": {
-      "VotingSystem": {
-        "0": [
-          [],
-          [],
-          []
-        ]
-      }
-    }
-  }
+  "tx": {}
 }
