@@ -5,7 +5,7 @@ import { Contract, utils } from "ethers"
 
 import { Ballot } from "./Ballot/Ballot"
 import './cmoponents.css'
-import VotingSystem from "../chain-info/deployments/5/0x8699DD26788FfEEbDb74313e29917D999187F40f.json"
+import VotingSystem from "../chain-info/deployments/5/0x3ab321172ca1Dc6D33cDA074c9d9d3001fD1f050.json"
 import { AdminPanel } from "./Ballot/AdminPanel"
 import { color, textAlign } from "@mui/system"
 
@@ -13,7 +13,7 @@ export const Main = () => {
 
     /** CONNECT CONTRACT */
     const { account } = useEthers()
-    const votingSystemAdress = '0x8699DD26788FfEEbDb74313e29917D999187F40f'
+    const votingSystemAdress = '0x3ab321172ca1Dc6D33cDA074c9d9d3001fD1f050'
     const contract = new Contract(votingSystemAdress, new utils.Interface(VotingSystem.abi)) as any
 
     /** GET FUNCTIONS AND VALUES FROM CONTRACT */
@@ -72,7 +72,6 @@ export const Main = () => {
                         <div>
                             <h2>Głosowanie otwarte!</h2>
                             <p>Podaj swoje dane a następnie wybierz swojego kandydata</p>
-                            <p>Głosowanie otwarte? {String(isElectionOpen)}</p>
 
                         </div>
 
